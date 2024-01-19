@@ -128,7 +128,10 @@ def ban_user(message):
             bot.reply_to(message, f"Пользователь @{message.reply_to_message.from_user.username} был забанен.")
     else:
         bot.reply_to(message, "Эта команда должна быть использована в ответ на сообщение пользователя, которого вы хотите забанить.")
-
+@bot.chat_join_request_handler()
+def make_some(message: telebot.types.ChatJoinRequest):
+    bot.send_message(message.chat.id, 'У нас новый пользователь!')
+    bot.approve_chat_join_request(message.chat.id, message.from_user.id)
 @bot.message_handler(func=lambda message: 'https://' in message.text)
 def ban_usere(message):
     chat_id = message.chat.id # сохранение id чата
